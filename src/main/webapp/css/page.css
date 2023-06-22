@@ -1,0 +1,18 @@
+@charset "UTF-8";
+#pageBar{
+	justify-content: center;
+}
+.listNum{
+	display:inline-block;
+	background: skyblue;
+	text-align: center;
+	box-shadow: 5px 5px gray;
+}
+.list-group{
+	list-style-type: none;
+}
+.div-table {
+  max-width: 1200px;
+  max-height: 680px;
+  overflow-y: scroll;
+}
