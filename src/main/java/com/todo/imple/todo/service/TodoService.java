@@ -6,13 +6,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.pagehelper.Page;
 import com.todo.imple.todo.mapper.TodoDetailsMapper;
 import com.todo.imple.todo.mapper.TodoTitlesMapper;
 import com.todo.imple.todo.model.TodoJson;
@@ -30,6 +33,9 @@ public class TodoService {
 
 	@Autowired
 	UserManageService manageService;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 	
 	public Integer createTodo(TodoTitlesDTO dto, UserDetails userDetails) {
 		
@@ -70,6 +76,25 @@ public class TodoService {
 			System.out.println(e.getMessage());
 		}
 		return returnJson;
+	}
+	
+	public List<TodoTitlesDTO> getTodoList(String username) {
+		return tTitlesMapper.selectTodoList(username); 
+	}
+	public Page<TodoTitlesDTO> getTodoListPage(String username) {
+		return tTitlesMapper.selectTodoListPage(username); 
+	}
+	
+	@Transactional
+    public Integer deleteByIdxs(List<String> ids, String username) {
+        return tTitlesMapper.deleteTodoLists(ids,username);
+    }
+
+	public TodoTitlesDTO getDetailTodo(Integer tdtino, String username) {
+		return tTitlesMapper.selectDetailTodoList(tdtino, username);
+	}
+	public Integer updateDetailTodo(TodoTitlesDTO dto, Integer idno) {
+		return tTitlesMapper.updateDetailTodo(strToDate(dto), idno);
 	}
 	
 }

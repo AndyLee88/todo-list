@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.todo.imple.todo.model.TodoTitlesDTO;
+import com.todo.imple.todo.service.TodoService;
 import com.todo.imple.user.model.UsersDTO;
 import com.todo.imple.user.service.UserManageService;
 import com.todo.standard.controller.UpdateController;
@@ -22,6 +23,8 @@ public class TodoUpdateController implements UpdateController<TodoTitlesDTO, Int
 
 	@Autowired
 	UserManageService manageService;
+	@Autowired
+	TodoService todoService; 
 	
 	@Override
 	public String update(Integer key, Model model, HttpServletRequest request) {
@@ -33,7 +36,7 @@ public class TodoUpdateController implements UpdateController<TodoTitlesDTO, Int
 	public String update(@Valid TodoTitlesDTO dto, BindingResult binding, Model model, HttpServletRequest request,
 			RedirectAttributes attr, UserDetails userDetails) {
 		UsersDTO users = manageService.selectByUsername(userDetails.getUsername());
-    	users.getIdno();
-    	return "todo/list/";
+		todoService.updateDetailTodo(dto, users.getIdno());
+    	return "redirect:/todo/detail/"+dto.getTdtino().toString();
 	}
 }

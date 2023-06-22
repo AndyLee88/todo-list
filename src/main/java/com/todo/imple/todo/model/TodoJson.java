@@ -7,6 +7,8 @@ public class TodoJson {
 	private String title;
     private String start;
     private String end;
+    private String url;
+    
 
     public void setTitle(String title) {
         this.title = title;
@@ -41,6 +43,12 @@ public class TodoJson {
 	public String getTitle() {
 		return title;
 	}
-    
-    
+
+	public String getUrl() {
+		return "/todo/detail/"+url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }
